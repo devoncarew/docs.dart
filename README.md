@@ -1,2 +1,2 @@
 # docs.dart
-Yet another documentation generator.
+A dartdoc documentation generator.
