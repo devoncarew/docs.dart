@@ -1,7 +1,7 @@
 
 import 'log.dart';
 
-export 'log.dart' show Progress;
+export 'log.dart' show Progress, Log;
 
 Log log = new Log();
 

@@ -1,21 +1,37 @@
-// import 'package:test/test.dart';
 
-// TODO: test the cli responses
+import 'package:test/test.dart';
+import 'package:docs/src/globals.dart';
+
+import 'impl/support.dart';
+import '../bin/docs.dart' as docs_main;
 
 void main() {
-  // group('dartdoc', () {
-  //   Directory tempDir;
+  group('cli', () {
 
-  //   setUp(() {
-  //     tempDir = Directory.systemTemp.createTempSync('dartdoc.test.');
-  //   });
+    setUp(() {
+      log = new TestLog();
+    });
 
-  //   tearDown(() {
-  //     delete(tempDir);
-  //   });
+    test('help', () {
+      try {
+        docs_main.main(['--help']);
+        fail('expected exit 0');
+      } on String catch (exit) {
+        expect(exit, 'exit 0');
+        expect(_testLog.stdout.toString(), contains('usage: '));
+      }
+    });
 
-  //   test('ff', () {
-  //     // expect(p.libraries, hasLength(8));
-  //   });
-  // });
+    test('bad option', () {
+      try {
+        docs_main.main(['--foo']);
+        fail('expected exit 1');
+      } on String catch (exit) {
+        expect(exit, 'exit 1');
+        expect(_testLog.stderr.toString(), contains('Could not find an option'));
+      }
+    });
+  });
 }
+
+TestLog get _testLog => log as TestLog;

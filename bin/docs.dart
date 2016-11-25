@@ -37,7 +37,7 @@ main(List<String> args) {
   }
 
   if (argResults['help']) {
-    status("usage: 'dart docs'");
+    status("usage: dart docs");
     status('');
     status(parser.usage);
     log.exit(0);
