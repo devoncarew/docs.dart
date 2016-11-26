@@ -11,17 +11,25 @@ import 'src/utils.dart';
 
 export 'src/utils.dart' show DocFailure;
 
+// TODO: generate sdk docs
+// TODO: handle exports
+// TODO: html generation and css style
+// TODO: good definition for the model
+// TOOD: classes are listed both on the library page and on their own sub-pages
+// TODO: fast generation - can we easily leverage summaries?
+// TOOD: inherited properties are summarized by name, linked to their defining page
+
 void generateDocs(
   Directory packageDir,
   Directory outputDir, {
-  bool verbose,
-  bool useColor
+  bool verbose: false,
+  bool useColor: true
 }) {
   log.verbose = verbose;
   log.ansi = useColor;
 
   // Hello to the user.
-  String packageName = getPackageName() ?? 'package';
+  String packageName = getPackageName(new File('pubspec.yaml')) ?? 'package';
   status('Generating documentation for ${packageName}:'); // TODO:
   status('');
 

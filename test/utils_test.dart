@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:docs/src/utils.dart';
 import 'package:test/test.dart';
 
@@ -11,7 +13,7 @@ void main() {
     });
 
     test('getPackageName', () {
-      expect(getPackageName(), 'docs');
+      expect(getPackageName(new File('pubspec.yaml')), 'docs');
     });
 
     test('collectDocFiles', () {

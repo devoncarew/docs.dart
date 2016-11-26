@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Dart command line",
+      "name": "doc docs",
       "type": "dart-cli",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -10,6 +10,17 @@
       "program": "${workspaceRoot}/bin/docs.dart",
       "args": [
         "--no-color"
+      ]
+    }, {
+      "name": "doc analyzer",
+      "type": "dart-cli",
+      "request": "launch",
+      "cwd": "${workspaceRoot}/../workspace/sdk/pkg/analyzer",
+      "debugSettings": "${command.debugSettings}",
+      "program": "${workspaceRoot}/bin/docs.dart",
+      "args": [
+        "--no-color",
+        "--out=${workspaceRoot}/doc/api"
       ]
     }
   ]

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:docs/docs.dart';
 import 'package:docs/src/globals.dart';
-import 'package:path/path.dart' as path;
 
 main(List<String> args) {
   ArgParser parser = new ArgParser();
@@ -25,6 +24,12 @@ main(List<String> args) {
     defaultsTo: true,
     help: 'Enable or disable ansi drawing.'
   );
+  parser.addOption(
+    'out',
+    abbr: 'o',
+    defaultsTo: 'doc/api',
+    help: 'The directory to generate documentation in.'
+  );
   ArgResults argResults;
 
   try {
@@ -43,7 +48,7 @@ main(List<String> args) {
     log.exit(0);
   }
 
-  Directory out = new Directory(path.join('doc', 'api'));
+  Directory out = new Directory(argResults['out']);
 
   generateDocs(
     Directory.current,

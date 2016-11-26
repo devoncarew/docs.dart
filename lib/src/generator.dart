@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as path;
 
+import 'css.dart' as css;
 import 'globals.dart';
 import 'html.dart';
 import 'model.dart';
@@ -23,23 +24,32 @@ class Generator {
       for (Library library in package.libraries) {
         trace('generating ${package.label} ${library.label}');
 
-        // TODO: Emit each package into it's own directory?
+        // TODO: Emit each package into it's own directory? Only if multiple
+        // packages?
 
         String relativePath = library.libraryPath;
         String filePath = path.join(out.path, relativePath);
         filePath = filePath.substring(
-          0, filePath.length - path.extension(filePath).length) + '.html';
+          0, filePath.length - path.extension(filePath).length
+        ) + '.html';
         Html html = new Html();
-        html.start(title: relativePath);
+        html.start(
+          title: relativePath,
+          cssRefs: [css.kSourceSansPro, css.kBootstrap],
+          inlineCss: [css.docs]
+        );
 
-        html.startTag('header', attributes: "id=page-header");
-        html.tag('p', contents: 'header');
-        html.endTag();
+        html.startTag('header');
+        html.startTag('nav');
+        html.tag('p', contents: library.importDirectiveText);
+        html.endTag(); // nav
+        html.endTag(); // header
+
         html.startTag('main');
         html.tag('p', contents: 'main');
         html.endTag();
-        html.startTag('footer', attributes: "id=page-footer");
-        html.tag('p', contents: 'footer');
+
+        html.startTag('footer');
         html.endTag();
 
         html.end();

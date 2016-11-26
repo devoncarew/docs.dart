@@ -4,13 +4,27 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:yaml/yaml.dart' as yaml;
 
-String getPackageName() {
+String getPackageName(File pubspecFile) {
   try {
-    String contents = new File('pubspec.yaml').readAsStringSync();
+    String contents = pubspecFile.readAsStringSync();
     var doc = yaml.loadYamlDocument(contents);
     return (doc.contents as Map)['name'];
   } catch (e) {
     return null;
+  }
+}
+
+// TODO: test
+File findPubspecFor(String filePath) {
+  Directory dir = new Directory(path.dirname(filePath));
+
+  while (true) {
+    if (dir.parent == dir) return null;
+
+    File file = new File(path.join(dir.path, 'pubspec.yaml'));
+    if (file.existsSync()) return file;
+
+    dir = dir.parent;
   }
 }
 

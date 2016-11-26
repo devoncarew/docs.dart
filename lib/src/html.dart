@@ -15,8 +15,8 @@ class Html {
 
   void start({
     String title,
-    String cssRef,
-    String inlineCss
+    List<String> cssRefs: const [],
+    List<String> inlineCss: const []
   }) {
     startTag('html', newLine: false);
     writeln();
@@ -29,27 +29,21 @@ class Html {
       writeln('<title>${title}</title>');
     }
 
-    // TODO: jquery?
-    writeln('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">');
-    writeln('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>');
-    writeln('<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700" rel="stylesheet" type="text/css">');
-
-    if (cssRef != null) {
-      writeln('<link href="${cssRef}" rel="stylesheet" media="screen">');
+    for (String ref in cssRefs) {
+      writeln('<link href="${ref}" rel="stylesheet">');
     }
 
-    if (inlineCss != null) {
+    for (String css in inlineCss) {
       startTag('style');
-      writeln(inlineCss.trim());
+      writeln(css.trim());
       endTag();
     }
 
-    // head
-    endTag();
+    endTag(); // head
 
     writeln();
 
-    startTag('body', attributes: "class=guide", newLine: false);
+    startTag('body', newLine: false);
     writeln();
   }
 
@@ -103,15 +97,8 @@ class Html {
   }
 
   void end() {
-    // body
-    endTag();
-
-    // html
-    endTag();
-  }
-
-  String toString() {
-    return buffer.toString();
+    endTag(); // body
+    endTag(); // html
   }
 
   void write(String str) {
@@ -132,4 +119,6 @@ class Html {
 
     startOfLine = true;
   }
+
+  String toString() => buffer.toString();
 }
